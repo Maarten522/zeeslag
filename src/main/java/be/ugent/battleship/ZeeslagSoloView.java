@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
 
 public class ZeeslagSoloView extends Application {
@@ -64,9 +65,21 @@ public class ZeeslagSoloView extends Application {
         fileButton.getStyleClass().add("controlButton");
 
         if (TESTMODE) {
-            fileButton.setOnAction(e -> initializeGameForTestPhase());
+            fileButton.setOnAction(e -> {
+                try {
+                    initializeGameForTestPhase();
+                } catch (FileNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+            });
         } else {
-            fileButton.setOnAction(e -> initializeGameFromFile());
+            fileButton.setOnAction(e -> {
+                try {
+                    initializeGameFromFile();
+                } catch (FileNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+            });
         }
 
         vbox.getChildren().addAll(titleLabel, fileButton);
@@ -80,8 +93,8 @@ public class ZeeslagSoloView extends Application {
     }
 
 
-    private void initializeGameForTestPhase() {
-        gameModel = new BattleshipSoloGame(new File(pathToImages+"shipsA.txt"));
+    private void initializeGameForTestPhase() throws FileNotFoundException {
+        gameModel = new BattleshipSoloGame(new File(pathToGames+"shipsA.txt"));
         cols = gameModel.getColumnCount();
         rows = gameModel.getRowCount();
 
@@ -89,7 +102,7 @@ public class ZeeslagSoloView extends Application {
         startGame();
     }
 
-    private void initializeGameFromFile() {
+    private void initializeGameFromFile() throws FileNotFoundException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(pathToGames));
         fileChooser.setTitle("Select game to load");
