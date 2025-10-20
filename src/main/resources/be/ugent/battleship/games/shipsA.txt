@@ -1,0 +1,7 @@
+10 9
+6 0 0 horizontal vliegdekschip
+4 0 2 horizontal slagschip
+3 0 4 horizontal onderzeeër
+3 0 6 horizontal onderzeeër
+2 0 8 horizontal patrouilleschip
+

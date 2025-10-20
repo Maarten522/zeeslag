@@ -1,0 +1,6 @@
+10 9
+6 8 0 vertical vliegdekschip
+4 6 0 vertical slagschip
+3 4 0 vertical onderzeeër
+3 2 0 vertical onderzeeër
+2 0 0 vertical patrouilleschip
