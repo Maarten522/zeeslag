@@ -5,34 +5,34 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class BattleshipSoloGame implements IBattleshipSoloGame {
+    private Board spelBord;
     private int aantalRijen;
     private int aantalKolommen;
-    private int numberOfMoves = 0;
-    private int x;
-    private int y;
-    private int bootLengte;
-    private String richting;
-    private String typeBoot;
+    private int numberOfMoves;
 
     public BattleshipSoloGame(File file) throws FileNotFoundException {
             Scanner sc = new Scanner(file);
 
+
             aantalKolommen = sc.nextInt();
             aantalRijen = sc.nextInt();
             sc.nextLine();
+            spelBord = new Board(aantalKolommen, aantalRijen);
 
             while (sc.hasNextLine()) {
                 String line = sc.nextLine().trim();
                 if (line.isEmpty()) continue;
 
                 String[] parts = line.split(" ");
-                bootLengte = Integer.parseInt(parts[0]);
-                x = Integer.parseInt(parts[1]);
-                y = Integer.parseInt(parts[2]);
-                richting = parts[3];
-                typeBoot = parts[4];
+                int bootLengte = Integer.parseInt(parts[0]);
+                int startX = Integer.parseInt(parts[1]);
+                int startY = Integer.parseInt(parts[2]);
+                String richting = parts[3];
+                String soortSchip = parts[4];
 
-                System.out.printf("Schip: %s (%d), positie (%d,%d), %s%n", typeBoot, bootLengte, x, y, richting);
+                spelBord.plaatsSchepen(bootLengte, startX, startY, richting, soortSchip);
+
+                System.out.printf("Schip: %s (%d), positie (%d,%d), %s%n", soortSchip, bootLengte, startX, startY, richting);
             }
 
             sc.close();
@@ -51,13 +51,28 @@ public class BattleshipSoloGame implements IBattleshipSoloGame {
 
     @Override
     public String getCellContent(Position pos, boolean forOwner) {
-        return "";
+        Cell cel = spelBord.getCell(pos.x, pos.y);
+
+        if (cel.getTypeCel().equals("ship")) {
+            return forOwner ? "ship" : "shot";
+        } else {
+            return "sea";
+        }
     }
 
     @Override
     public String getCellContentImage(Position pos) {
-        return "";
+        String content = getCellContent(pos, false); // of false afhankelijk van wie kijkt
+
+        switch (content) {
+            case "ship": return "ship.png";
+            case "shot": return "fire.png";
+            case "sea": return "fountain.png";
+            default: return "unknown.png";
+        }
+
     }
+
 
     @Override
     public void shoot(Position pos) {
@@ -76,6 +91,7 @@ public class BattleshipSoloGame implements IBattleshipSoloGame {
 
     @Override
     public String shipSunk(Position pos) {
-        return "";
+        Cell cel = spelBord.getCell(pos.x, pos.y);
+        return cel.getSoortSchip();
     }
 }
