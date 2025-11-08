@@ -9,14 +9,14 @@ public class Board {
         this.aantalKolommen = aantalKolommen;
         cellen = new Cell[aantalRijen][aantalKolommen];
 
-        for (r = 0; r < aantalRijen; r++){
-            for (c = 0; c < aantalKolommen; c++){
+        for (r = 0; r < aantalRijen; r++) {
+            for (c = 0; c < aantalKolommen; c++) {
                 cellen[r][c] = new Cell();
             }
         }
     }
 
-    public Cell getCell(int x, int y){
+    public Cell getCell(int x, int y) {
         return cellen[x][y];
     }
 
@@ -37,6 +37,7 @@ public class Board {
             Cell cel = cellen[startX][startY]; // rij = startY, kolom = startX
             cel.setType("ship");
             cel.setSoortSchip(soortSchip);
+            cel.setBootLengte(bootLengte);
 
             System.out.printf("Cel geplaatst op (%d,%d), soort %s%n", startX, startY, soortSchip);
         }

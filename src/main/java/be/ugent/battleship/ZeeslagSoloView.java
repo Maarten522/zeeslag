@@ -22,7 +22,6 @@ import javafx.util.Duration;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-
 public class ZeeslagSoloView extends Application {
 
     // GOOD FOR TESTING PURPOSES
@@ -30,7 +29,7 @@ public class ZeeslagSoloView extends Application {
     // this constant can be set to true.
     // In that case, the program uses "shipsA.txt" as input
     // (where ships are located in an easy constellation).
-    private static boolean TESTMODE = false;
+    private static boolean TESTMODE = true;
 
     private IBattleshipSoloGame gameModel;
     private Button[][] gameBoard;
@@ -40,11 +39,12 @@ public class ZeeslagSoloView extends Application {
     private int cols = 0;
     private int rows = 0;
 
-    private static int BIGSIZE = 50;//50
+    private static int BIGSIZE = 50;// 50
 
-    private static String pathToImages = System.getProperty("user.dir") + "/src/main/resources/be/ugent/battleship/images/";
-    private static String pathToGames = System.getProperty("user.dir") + "/src/main/resources/be/ugent/battleship/games/";
-
+    private static String pathToImages = System.getProperty("user.dir")
+            + "/src/main/resources/be/ugent/battleship/images/";
+    private static String pathToGames = System.getProperty("user.dir")
+            + "/src/main/resources/be/ugent/battleship/games/";
 
     @Override
     public void start(Stage primaryStage) {
@@ -92,9 +92,8 @@ public class ZeeslagSoloView extends Application {
         primaryStage.centerOnScreen();
     }
 
-
     private void initializeGameForTestPhase() throws FileNotFoundException {
-        gameModel = new BattleshipSoloGame(new File(pathToGames+"shipsA.txt"));
+        gameModel = new BattleshipSoloGame(new File(pathToGames + "shipsA.txt"));
         cols = gameModel.getColumnCount();
         rows = gameModel.getRowCount();
 
@@ -123,9 +122,7 @@ public class ZeeslagSoloView extends Application {
         }
     }
 
-
     private void startGame() {
-
 
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(10));
@@ -147,9 +144,10 @@ public class ZeeslagSoloView extends Application {
     }
 
     private void setGraphicOnButton(Button button, String imageFileName) {
-        Image image = new Image(getClass().getResource("/be/ugent/battleship/images/" + imageFileName).toExternalForm());
+        Image image = new Image(
+                getClass().getResource("/be/ugent/battleship/images/" + imageFileName).toExternalForm());
         ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(button.getPrefWidth());  // Adjust to button size
+        imageView.setFitWidth(button.getPrefWidth()); // Adjust to button size
         imageView.setFitHeight(button.getPrefHeight()); // Adjust to button size
         imageView.setPreserveRatio(false); // Stretch image to fit button
         button.setGraphic(imageView);
@@ -165,14 +163,17 @@ public class ZeeslagSoloView extends Application {
             for (int col = 0; col < cols; col++) {
                 Button button = new Button();
                 button.setPrefSize(BIGSIZE, BIGSIZE);
-                button.setMinSize(BIGSIZE, BIGSIZE); // moet er ook bij; anders herschaalt button naar grootte van afbeelding
-                button.setMaxSize(BIGSIZE, BIGSIZE); // moet er ook bij; anders herschaalt button naar grootte van afbeelding
+                button.setMinSize(BIGSIZE, BIGSIZE); // moet er ook bij; anders herschaalt button naar grootte van
+                                                     // afbeelding
+                button.setMaxSize(BIGSIZE, BIGSIZE); // moet er ook bij; anders herschaalt button naar grootte van
+                                                     // afbeelding
                 setGraphicOnButton(button, "unknown.png");
                 Button[][] finalGameBoard = gameBoard;
                 final Position pos = new Position(col, row);
 
                 button.setOnAction(e -> {
                     gameModel.shoot(pos);
+                    movesLabel.setText("Moves: " + gameModel.getMoveCount());
                     String nameOfImage = gameModel.getCellContentImage(pos);
                     setGraphicOnButton(button, nameOfImage);
 
@@ -191,7 +192,8 @@ public class ZeeslagSoloView extends Application {
     private void checkShipSunk(Position pos) {
         String naamGezonkenSchip = gameModel.shipSunk(pos);
         if (naamGezonkenSchip != null) {
-            Alert alert = new Alert(Alert.AlertType.NONE, "Je liet een " + naamGezonkenSchip + " zinken!", ButtonType.OK);
+            Alert alert = new Alert(Alert.AlertType.NONE, "Je liet een " + naamGezonkenSchip + " zinken!",
+                    ButtonType.OK);
             alert.showAndWait();
         }
     }
@@ -216,4 +218,3 @@ public class ZeeslagSoloView extends Application {
         launch(args);
     }
 }
-
