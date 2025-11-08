@@ -23,6 +23,7 @@ public class Board {
     public void plaatsSchepen(int bootLengte, int x, int y, String richting, String soortSchip) {
         boolean horizontaal = richting.equalsIgnoreCase("horizontal");
         boolean verticaal = richting.equalsIgnoreCase("vertical");
+        Position startPos = new Position(x, y);
 
         for (int i = 0; i < bootLengte; i++) {
             int startX = x;
@@ -38,6 +39,7 @@ public class Board {
             cel.setType("ship");
             cel.setSoortSchip(soortSchip);
             cel.setBootLengte(bootLengte);
+            cel.setStartPositie(startPos);
 
             System.out.printf("Cel geplaatst op (%d,%d), soort %s%n", startX, startY, soortSchip);
         }

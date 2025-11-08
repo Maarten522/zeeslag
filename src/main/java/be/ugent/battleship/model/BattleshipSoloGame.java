@@ -119,12 +119,13 @@ public class BattleshipSoloGame implements IBattleshipSoloGame {
         }
 
         String soortSchip = cel.getSoortSchip().toLowerCase();// slaat soort schip op als cel gelijk is aan schip
-
         int geraakt = 0;
         for (int y = 0; y < aantalRijen; y++) {
             for (int x = 0; x < aantalKolommen; x++) {
                 Cell c = spelBord.getCell(x, y);
-                if (c.getTypeCel().equals("ship") && c.getSoortSchip().toLowerCase().equals(soortSchip) && c.isGeraakt()) {
+                Position startBoot = cel.getStartPositie(); // unieke startpositie per schip om te zorgen dat boten met hetzelfde type ook geschoten kunnen worden
+
+                if (c.getTypeCel().equals("ship") && c.getSoortSchip().toLowerCase().equals(soortSchip) && c.getStartPositie().equals(startBoot) && c.isGeraakt()) {
                     geraakt++;
                 }
             }

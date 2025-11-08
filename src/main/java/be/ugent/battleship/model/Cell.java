@@ -5,6 +5,7 @@ public class Cell {
     private String soortSchip;
     private Boolean geraakt;
     private Integer bootlengte;
+    private Position startPositie;
 
     public Cell() {
         this.type = "sea";
@@ -42,5 +43,13 @@ public class Cell {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Position getStartPositie() {
+        return startPositie;
+    }
+
+    public void setStartPositie(Position startPositie) {
+        this.startPositie = startPositie;
     }
 }
