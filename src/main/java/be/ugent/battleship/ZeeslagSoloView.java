@@ -29,7 +29,7 @@ public class ZeeslagSoloView extends Application {
     // this constant can be set to true.
     // In that case, the program uses "shipsA.txt" as input
     // (where ships are located in an easy constellation).
-    private static boolean TESTMODE = true;
+    private static boolean TESTMODE = false;
 
     private IBattleshipSoloGame gameModel;
     private Button[][] gameBoard;
